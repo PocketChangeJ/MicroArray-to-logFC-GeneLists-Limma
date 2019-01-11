@@ -119,11 +119,12 @@ library(limma)
 setwd("...")
 
 # input variables
-series_matrix_file <- "GSE93606/series_matrix.tsv"
-classlabels_file <- "GSE93606/classlabels.tsv"
-platform_file <- "GSE93606/platform.tsv"
+folder <- "experiment"
+series_matrix_file <- paste(folder, "series_matrix.tsv", sep = "/")
+classlabels_file <- paste(folder, "classlabels.tsv", sep = "/")
+platform_file <- paste(folder, "platform.tsv", sep = "/")
 # output filename
-outfile <- "GSE93606/limma.tsv"
+outfile <- paste(folder, "limma.tsv", sep = "/")
 
 # parse files, filename + boolean header
 series_matrix <- parseFile(series_matrix_file, TRUE) # character or double
@@ -142,7 +143,7 @@ remove(temp) # clearing memory
 
 # boxplot and decide toNormalize = TRUE or FALSE
 boxplot(gene_intensities)
-toNormalize = FALSE # TRUE
+toNormalize <- FALSE # TRUE
 
 # check if intensities are log-ed
 toLog <- checkLog(gene_intensities) # TRUE or FALSE
