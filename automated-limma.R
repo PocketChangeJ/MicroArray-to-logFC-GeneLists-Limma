@@ -162,7 +162,7 @@ limma <- pvalueClear(limma, cutoff)
 colnames(platform)[1] <- "probeIDs"
 limma <- merge(limma, platform)
 # removing values without Gene Symbols first
-limma <- limma[limma[, 4] != "---", ] # --- or " " or ""
+limma <- limma[limma[, 4] != "", ] # --- or " " or ""
 
 # experimental function
 limma <- removeDualSignProbes(limma)
