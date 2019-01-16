@@ -28,6 +28,13 @@ checkLog <- function(intensities){
   return(toLog)
 }
 
+# executed if negative values exist in intensities
+cureNegative <- function(intensities){
+  min <- abs(min(intensities)) + 0.001 # + 0.001 to avoid 0s
+  intensities <- intensities + min
+  return(intensities)
+}
+
 # handle data based on toLog, toNormalize or both, or un-log, normalize and re-log
 handleData <- function(intensities, norm, log){
   if ( norm && log ){
@@ -140,6 +147,12 @@ gene_intensities <- matrix(as.double(temp),
 colnames(gene_intensities) <- colnames(temp)
 rownames(gene_intensities) <- probeIDs
 remove(temp) # clearing memory
+
+# check for negative values, 2 approaches
+# 1. add abs min
+if (min(gene_intensities) < 0) gene_intensities <- cureNegative(gene_intensities)
+# or 2. change to threshold
+# if (min(gene_intensities) < 0) gene_intensities[gene_intensities < 0] <- 0.001
 
 # boxplot and decide toNormalize = TRUE or FALSE
 boxplot(gene_intensities)
